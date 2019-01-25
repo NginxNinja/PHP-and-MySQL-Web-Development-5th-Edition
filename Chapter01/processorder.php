@@ -1,4 +1,9 @@
 <?php
+// constant variables
+define("TIREPRICE", 100);
+define("OILPRICE", 10);
+define("SPARKPRICE", 4);
+
 //create short variable names
 $tireqty = $_POST['tireqty'];
 $oilqty = $_POST['oilqty'];
@@ -29,10 +34,27 @@ $sparkqty = $_POST['sparkqty'];
     	echo htmlspecialchars($oilqty) . ' bottles of oil. <br/>';
     	echo htmlspecialchars($sparkqty) . ' spark plugs. <br/>';
     	
+    	$totalqty = $tireqty + $oilqty + $sparkqty;
+    	echo "<p>";
+    	echo "Items ordered: $totalqty. <br/>";
+
+//    	$totalamount = 0.00;
+    	$totalamount = $tireqty * TIREPRICE +
+    	               $oilqty * OILPRICE +
+    	               $sparkqty * SPARKPRICE;
+    	               
+    	echo "Subtotal: $" .number_format($totalamount, 2). "<br/>";
+    	
+    	$taxrate = 0.10; // local sales tax is 10%
+    	$totalamount = $totalamount * (1 + $taxrate);
+    	echo "Total including tax:  $" .number_format($totalamount, 2). ".<br/>";
+    	
+    	echo "</p>";
+    	
     	# (shell script comment) Heredoc sysntax
     	echo <<<theString
     	<br/> This is
-        a sample hredoc string.
+        a sample heredoc string.
         The End.
 theString
     	?>
