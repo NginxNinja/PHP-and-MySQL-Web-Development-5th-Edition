@@ -19,6 +19,12 @@ $sparkqty = $_POST['sparkqty'];
     	<h1>Bob's Auto Parts</h1>
     	<h2>Order Results</h2>
     	<?php
+/**    	$totalqty = 0;
+    	(int)$totalqty = (int)($tireqty + $oilqty + $sparkqty);
+    	if($totalqty == 0){
+    	    echo '<p style = "color: red;">';
+    	    echo 'You did not order anything from the previous page! </p>';
+    	} **/
     	echo '<p>Order processed at ' . date('H:i, jS F Y') . "</p>";
     	
     	echo '<p>Your order is as follows: </p>';
@@ -56,7 +62,15 @@ $sparkqty = $_POST['sparkqty'];
     	<br/> This is
         a sample heredoc string.
         The End.
-theString
+theString;
+    	# Testing Variable Status
+    	echo "<p>";
+    	echo "<strong>Testing the Variable Status</strong> <br/>";
+    	echo 'isset($tireqty): ' . isset($tireqty) . '<br/>';
+    	echo 'isset($nothere): ' . isset($nothere) . '<br/>';
+    	echo 'empty($tireqty): ' . empty($tireqty) . '<br/>';
+    	echo 'empty($nothere): ' . empty($nothere) . '<br/>';
+    	echo "</p>";
     	?>
     </body>
 </html>
