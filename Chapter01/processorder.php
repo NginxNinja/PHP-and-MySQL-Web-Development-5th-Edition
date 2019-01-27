@@ -5,9 +5,16 @@ define("OILPRICE", 10);
 define("SPARKPRICE", 4);
 
 //create short variable names
+# This variables are converted into Integer from String of $_POST[] array.
+$tireqty = (int)($_POST['tireqty']);
+$oilqty = (int)($_POST['oilqty']);
+$sparkqty = (int)($_POST['sparkqty']);
+
+/** This variables are strings from the $_POST[] array.
 $tireqty = $_POST['tireqty'];
 $oilqty = $_POST['oilqty'];
 $sparkqty = $_POST['sparkqty'];
+**/
 ?>
 
 <!DOCTYPE html>
@@ -17,14 +24,23 @@ $sparkqty = $_POST['sparkqty'];
     </head>
     <body>
     	<h1>Bob's Auto Parts</h1>
-    	<h2>Order Results</h2>
     	<?php
-/**    	$totalqty = 0;
-    	(int)$totalqty = (int)($tireqty + $oilqty + $sparkqty);
+       	$totalqty = 0;
+    	$totalqty = $tireqty + $oilqty + $sparkqty;
+    	
     	if($totalqty == 0){
+    	    /** Checking the Variable Type **/
+    	    echo '<p>';
+    	    echo '$totalqty: ' . gettype($totalqty) . '<br/>';
+    	    echo '$tireqty: ' . gettype($tireqty) . '<br/>';
+    	    echo '$oilqty: ' . gettype($oilqty) . '<br/>';
+    	    echo '$sparkqty: ' . gettype($sparkqty) . '<br/>';
+    	    echo '</p>';
     	    echo '<p style = "color: red;">';
     	    echo 'You did not order anything from the previous page! </p>';
-    	} **/
+    	}
+    	else {
+    	echo '<h2>Order Results</h2>';
     	echo '<p>Order processed at ' . date('H:i, jS F Y') . "</p>";
     	
     	echo '<p>Your order is as follows: </p>';
@@ -71,6 +87,7 @@ theString;
     	echo 'empty($tireqty): ' . empty($tireqty) . '<br/>';
     	echo 'empty($nothere): ' . empty($nothere) . '<br/>';
     	echo "</p>";
+    	}
     	?>
     </body>
 </html>
