@@ -9,6 +9,7 @@ define("SPARKPRICE", 4);
 $tireqty = (int)($_POST['tireqty']);
 $oilqty = (int)($_POST['oilqty']);
 $sparkqty = (int)($_POST['sparkqty']);
+$find = $_POST['find'];
 
 /** This variables are strings from the $_POST[] array.
 $tireqty = $_POST['tireqty'];
@@ -42,6 +43,26 @@ $sparkqty = $_POST['sparkqty'];
     	else {
     	echo '<h2>Order Results</h2>';
     	echo '<p>Order processed at ' . date('H:i, jS F Y') . "</p>";
+    	
+    	echo '<p style="font-weight: bold;">';
+    	switch ($find) {
+    	    case "a":
+                echo "Regular customer.";
+                break;
+    	    case "b":
+    	        echo "Customer reffered by TV advertisement.";
+    	        break;
+    	    case "c":
+    	        echo "Customer reffered by phone directory.";
+    	        break;
+    	    case "d":
+    	        echo "Customer reffered by word of mouth.";
+    	        break;
+    	    default:
+                echo "We do not know how this customer found us.";
+    	    break;
+    	}
+    	echo '</p>';
     	
     	echo '<p>Your order is as follows: </p>';
     	# (shell script comment) This is the same output as the variable assignment.
