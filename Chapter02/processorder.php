@@ -6,12 +6,14 @@ define("SPARKPRICE", 4);
 
 //create short variable names
 # This variables are converted into Integer from String of $_POST[] array.
-$tireqty = (int)($_POST['tireqty']);
-$oilqty = (int)($_POST['oilqty']);
-$sparkqty = (int)($_POST['sparkqty']);
-$find = $_POST['find'];
-$address = $_POST['address'];
+$tireqty = (int) $_POST['tireqty'];
+$oilqty = (int) $_POST['oilqty'];
+$sparkqty = (int) $_POST['sparkqty'];
 
+$find = $_POST['find'];
+$address = preg_replace('/\t|\R/', ' ', $_POST['address']);
+$document_root = $_SERVER['DOCUMENT_ROOT'];
+$date = date('H:i, jS F Y');
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +30,7 @@ $address = $_POST['address'];
     	if($totalqty == 0){
     	    echo '<p style = "color: red;">';
     	    echo 'You did not order anything from the previous page! </p>';
-    	    exit;
+    	    exit();
     	}
     	else {
     	echo '<h2>Order Results</h2>';
@@ -56,12 +58,16 @@ $address = $_POST['address'];
     	
     	echo '<p>Your order is as follows: </p>';
     	
-        echo '<strong><u>Calling the variable assignment</u></strong><br/>';
+    	if($tireqty > 0){
     	echo htmlspecialchars($tireqty) . ' tires. <br/>';
+    	}
+    	if($oilqty > 0){
     	echo htmlspecialchars($oilqty) . ' bottles of oil. <br/>';
+    	}
+    	if($sparkqty){
     	echo htmlspecialchars($sparkqty) . ' spark plugs. <br/>';
+    	}
     	
-    	$totalqty = $tireqty + $oilqty + $sparkqty;
     	echo "<p>";
     	echo "Items ordered: $totalqty. <br/>";
 
@@ -73,11 +79,34 @@ $address = $_POST['address'];
     	
     	$taxrate = 0.10; // local sales tax is 10%
     	$totalamount = $totalamount * (1 + $taxrate);
-    	echo "Total including tax:  $" .number_format($totalamount, 2). ".<br/>";
+    	echo "Total including tax:  $" . number_format($totalamount, 2) . ".<br/>";
     	
     	echo "</p>";
     	
-    	echo "Address to ship to is ".$address.".";
+    	if($address != null){
+    	echo "Address to ship to is " . htmlspecialchars($address) . ".";
+    	}
+    	
+    	$outputstring = $date . "\t" . $tireqty . " tires \t" . $oilqty . " oil \t" . $sparkqty . " spark plugs \t \$" . $totalamount
+                        . "\t" . $address . "\n";
+    	
+        // open file for appending
+        // $fp = fopen("$document_root/../orders/orders.txt", 'w+');
+        $fp = fopen("C:\\xampp\\htdocs\\phpandmysql\\Chapter02\\orders\\orders.txt", 'ab');
+        
+        if(!$fp){
+            echo "<p><strong> Your order could not be processed at this time. 
+                  Please try again later.</strong></p>";
+            exit();
+        }
+        
+        flock($fp, LOCK_EX);
+        fwrite($fp, $outputstring, strlen($outputstring));
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        
+        echo '<p>Order written.</p>';
+    	}
     	?>
     </body>
 </html>
