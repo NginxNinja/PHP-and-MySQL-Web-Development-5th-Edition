@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Goal per Day</title>
+	<title>Goal Per Day</title>
 </head>
 <body>
-	<div align="center">
-	<table style="width: 100%; border: 1">
+	<div align="left">
+	<table>
 		<?php
 		$length = 687;
 		for($count = 1; $count <= $length; $count++){
 		    $percent = round($count/$length*100, 2);
-		    echo "<tr style=\"border: 1\">";
-		    echo "<td>Ends at page ".$count.". ". $percent."% completed.</td>";
+		    echo "<tr>";
+		    echo "<td style=\"border: 1px solid black;\">Ends at page ".$count.". ". $percent."% completed.</td>";
 		    echo "</tr>";
 		}
 		?>
