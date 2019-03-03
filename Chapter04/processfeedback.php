@@ -6,7 +6,7 @@ $feedback = trim($_POST['feedback']);
 // setup some static information
 $toaddress = "feedback@example.com";
 $subject = "Feedback from web site";
-$mailcontent = "Customer name: " .str_replace("\r\n", "", filter_var($name)). "\n" .
+$mailcontent = "Customer name: " .str_replace("\r\n", "", $name). "\n" .
                 "Customer email: " .str_replace("\r\n", "", $email). "\n" .
                 "Customer comments: " .str_replace("\r\n", "", $feedback). "\n";
 $fromaddress = "From: webserver@example.com";
@@ -22,6 +22,11 @@ mail($toaddress, $subject, $mailcontent, $fromaddress);
 </head>
 <body>
 	<h1>Feedback submitted</h1>
-	<p>Your feedback has been sent.</p>
+	<p>Your feedback (shown below)  has been sent.</p>
+	<p>
+	<?php 
+	echo nl2br(htmlspecialchars($feedback));
+	?>
+	</p>
 </body>
 </html>
