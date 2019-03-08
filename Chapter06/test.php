@@ -9,6 +9,42 @@ class classname{
 $a = new classname('First');
 $b = new classname('Second');
 
-$c = new classname(); // this will result to error message because there's no argument passed to the constructor of the Class.
+// $c = new classname(); // this will result to error message because there's no argument passed to the constructor of the Class.
+
+// Accessor function of the Class.
+class AccessorClass{
+    
+    private $attribute;
+    
+    function __get($param){
+        return $this->$param;
+    }
+    
+    function __set($param, $value) {
+        return $this->$param = $value;
+    }
+}
+
+$accessor = new AccessorClass();
+
+echo $accessor->attribute = 10;
+echo $accessor->attribute;
+
+// End of Accessor function of the Class.
+
+// Implementing Interface
+interface Display{
+    function display();
+}
+
+class DisplayClass implements Display{
+    function display(){
+        echo "Displaying the Interface function.";
+    }
+}
+
+$displayClass = new DisplayClass();
+
+// End of Implementing Interface
 
 ?>
