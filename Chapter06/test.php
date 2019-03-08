@@ -1,5 +1,7 @@
 <?php
 
+use PhpParser\Node\Stmt\Static_;
+
 class classname{
     function __construct($param){
         echo 'Constructor called with a parameter ' .$param. '.<br />';
@@ -46,5 +48,30 @@ class DisplayClass implements Display{
 $displayClass = new DisplayClass();
 
 // End of Implementing Interface
+
+// Late Static Binding
+echo "<p>";
+class A{
+    public static function whichclass(){
+        echo __CLASS__;
+    }
+    
+    public static function test(){
+        self::whichclass();
+    }
+}
+
+class B extends A{
+    public static function whichclass(){
+        echo __CLASS__;
+    }
+}
+
+A::test();
+B::test();
+
+echo "</p>";
+// End of Late Static Binding
+
 
 ?>
