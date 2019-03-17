@@ -8,7 +8,8 @@
     <?php
     // create short variable names.
     $searchtype = $_POST['searchtype'];
-    $searchterm = "%{$_POST['searchterm']}%";
+//    $searchterm = trim("%{$_POST['searchterm']}%");
+    $searchterm = trim($_POST['searchterm']);
     
     if(!isset($searchtype) && !isset($searchterm)){
         echo '<p>You have not entered search details.<br/>
@@ -29,26 +30,27 @@
     }
     
     $db = new mysqli(NULL, 'bookorama', 'bookorama123', 'books');
+    
     if(mysqli_connect_errno()){
         echo '<p>Error: Could not connect to database.<br/>
         Please try again later.</p>';
         exit();
     }
-    /**
+    
     // Original version of the codes
     $query = "SELECT ISBN, Author, Title, Price FROM books WHERE $searchtype = ?";
-    $query = "SELECT ISBN, Author, Title, Price FROM books";
     $stmt = $db->prepare($query);
     $stmt->bind_param('s', $searchterm);
     $stmt->execute();
     $stmt->store_result();
-    **/
     
+    /**
     // [EDITED] When showing all the results.
     $query = "SELECT ISBN, Author, Title, Price FROM books";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $stmt->store_result();
+    **/
     
     $stmt->bind_result($isbn, $author, $title, $price);
     
